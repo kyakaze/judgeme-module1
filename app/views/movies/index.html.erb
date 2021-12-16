@@ -1,1 +1,5 @@
-index
+<div class="d-flex flex-wrap justify-content-around">
+<% @movies.each do |movie| %>
+  <%= render "movies/partials/card", movie: movie %>
+<% end %>
+</div>

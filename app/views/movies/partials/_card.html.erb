@@ -1,0 +1,9 @@
+<div class="card mb-3" style="width: 18rem;">
+  <img src="https://www.themoviedb.org/t/p/w220_and_h330_face<%= movie[:poster_path] %>" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">
+      <%= link_to movie[:title], movie_path(movie[:id]) %>
+    </h5>
+    <p class="card-text"><%= movie[:overview] %></p>
+  </div>
+</div>

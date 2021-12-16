@@ -1,7 +1,19 @@
 class MoviesController < ApplicationController
 
   def index
-    # show all the movies
+    begin
+      res = RestClient.get "https://api.themoviedb.org/3/movie/popular",
+                           { params: {
+                             api_key: ENV['MOVIE_API_KEY'],
+                             page: 1
+                           }}
+      data = JSON.parse(res.body, symbolize_names: true)
+      @movies = data[:results]
+      # @page = data[:page]
+    rescue => e
+      puts e, "-----"
+      render "layouts/404" and return
+    end
   end
 
   def show
