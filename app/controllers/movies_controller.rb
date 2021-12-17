@@ -1,13 +1,13 @@
 class MoviesController < ApplicationController
+  # before_action :set_page, only: [:index, :search]
 
   def index
     trending = !params[:trending].nil? ? params[:trending] : "popular"
-    page = !params[:page].nil? ? params[:page] : 1
     begin
       res = RestClient.get "https://api.themoviedb.org/3/movie/#{trending}",
                            { params: {
                              api_key: ENV['MOVIE_API_KEY'],
-                             page: page
+                             page: get_page
                            }}
       data = JSON.parse(res.body, symbolize_names: true)
 
@@ -36,14 +36,13 @@ class MoviesController < ApplicationController
     if params[:query].nil?
       redirect_to  root_url and return
     end
-    page = !params[:page].nil? ? params[:page] : 1
 
     begin
       res = RestClient.get("https://api.themoviedb.org/3/search/movie#{params[:id]}" ,
                            { params: {
                              api_key: ENV['MOVIE_API_KEY'],
                              query: params[:query],
-                             page: page
+                             page: get_page
                            }})
       data = JSON.parse(res.body, symbolize_names: true)
       @movies = data[:results]
@@ -57,5 +56,13 @@ class MoviesController < ApplicationController
 
   end
 
+  private
+  def set_page
+    @page = !params[:page].nil? ? params[:page] : 1
+  end
+
+  def get_page
+    !params[:page].nil? ? params[:page] : 1
+  end
 
 end
