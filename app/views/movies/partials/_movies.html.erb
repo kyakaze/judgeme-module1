@@ -1,0 +1,6 @@
+<%= render "movies/partials/pagination", page: @page, total_page: @total_page %>
+<div class="d-flex flex-wrap justify-content-around">
+  <% movies.each do |movie| %>
+    <%= render "movies/partials/card", movie: movie %>
+  <% end %>
+</div>

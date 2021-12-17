@@ -1,0 +1,17 @@
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <% if page > 2 %>
+      <%= link_to "First", merge_params({controller: controller.controller_name, action: controller.action_name, page: 1}), class: "page-link" %>
+    <% end %>
+    <% (1..total_page).each do |p| %>
+      <li class="page-item">
+          <% if p < page + 2 && p > page - 2 %>
+            <%= link_to p, merge_params({controller: controller.controller_name, action: controller.action_name, page: p}), class: "page-link" %>
+          <% end %>
+      </li>
+    <% end %>
+    <% if page < total_page - 2 %>
+      <%= link_to "Last", merge_params({controller: controller.controller_name, action: controller.action_name, page: total_page}), class: "page-link" %>
+    <% end %>
+  </ul>
+</nav>
